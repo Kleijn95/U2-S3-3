@@ -40,7 +40,7 @@ fetch("https://striveschool-api.herokuapp.com/books")
       button.innerText = "Scarta";
 
       button.addEventListener("click", function () {
-        divCard.classList.add("d-none");
+        col.classList.add("d-none");
       });
 
       const submitButton = document.createElement("button");
