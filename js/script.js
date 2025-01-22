@@ -45,11 +45,13 @@ fetch("https://striveschool-api.herokuapp.com/books")
 
       const submitButton = document.createElement("button");
       submitButton.type = "submit";
-      submitButton.classList.add("btn", "btn-danger", "ms-2");
+      submitButton.classList.add("btn", "btn-success", "ms-2");
       submitButton.innerText = "Aggiungi al Carrello";
 
       submitButton.addEventListener("click", function (event) {
         event.preventDefault();
+
+        // event.target.elements - non funzionava
         const cardBody = event.target.closest(".card-body"); // Trova il contenitore della card
         const title = cardBody.querySelector(".card-title").innerText; // Trova il titolo
         const price = cardBody.querySelector(".card-text").innerText; // Trova il prezzo
@@ -60,6 +62,28 @@ fetch("https://striveschool-api.herokuapp.com/books")
         bookCart.appendChild(listItem);
       });
 
+      const deleteButton = document.createElement("button");
+      deleteButton.type = "button";
+      deleteButton.classList.add("btn", "btn-danger", "mt-2");
+      deleteButton.innerText = "Rimuovi";
+
+      deleteButton.addEventListener("click", function () {
+        const cardBody = deleteButton.closest(".card-body");
+        const title = cardBody.querySelector(".card-title").innerText;
+        const price = cardBody.querySelector(".card-text").innerText;
+        const itemToDelete = `${title} - ${price}`;
+
+        const bookCart = document.querySelector("ul");
+        const listItems = bookCart.querySelectorAll("li");
+
+        // Cerca l'elemento corrispondente nella lista e rimuovilo
+        listItems.forEach((li) => {
+          if (li.innerText === itemToDelete) {
+            li.remove(); // Rimuovi l'elemento dalla lista
+          }
+        });
+      });
+
       col.appendChild(divCard);
       divCard.appendChild(cardImg);
       divCard.appendChild(divBody);
@@ -67,6 +91,7 @@ fetch("https://striveschool-api.herokuapp.com/books")
       divBody.appendChild(p);
       divBody.appendChild(button);
       divBody.appendChild(submitButton);
+      divBody.appendChild(deleteButton);
       row.appendChild(col);
     }
   });
